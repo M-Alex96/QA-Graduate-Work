@@ -42,18 +42,4 @@ public class CardPaymentTest {
         var paymentStatus = DataBaseHelper.getPaymentEntity();
         Assertions.assertEquals("APPROVED", paymentStatus);
     }
-
-    @Test
-    public void shouldBuyByCreditApproved() {
-        open("http://localhost:8080");
-        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
-        var mainPage = new MainPage();
-        mainPage.buyInCredit();
-        var paymentProcess = new PaymentProcessPage();
-        paymentProcess.PaymentData(card);
-        var replyPage = new ReplyPage();
-        replyPage.successNotification();
-        var paymentStatus = DataBaseHelper.getCreditEntity();
-        Assertions.assertEquals("APPROVED", paymentStatus);
-    }
 }

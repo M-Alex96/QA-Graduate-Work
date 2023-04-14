@@ -13,9 +13,7 @@ public class DataBaseHelper {
 
     public static Connection getConn() throws SQLException {
         String url = System.getProperty("db.url");
-        String user = System.getProperty("db.user");
-        String password = System.getProperty("db.password");
-        return DriverManager.getConnection(url, user, password);
+        return DriverManager.getConnection(url);
     }
 
     @SneakyThrows
