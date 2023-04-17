@@ -32,7 +32,7 @@
 5. Выполнить запуск тестов указав путь к базе данных в командной строке:
 * Для MySQL: `./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"`
 * Для PostgreSQL: `./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
-6. Для получения отчётов Allure выполнить команды: `gradlew allureReport`, затем `./gradlew allureserve`.
+6. Для получения отчётов Allure выполнить команды: `./gradlew allurereport`, затем `./gradlew allureserve`.
 
 ### Документация
 
