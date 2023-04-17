@@ -9,22 +9,21 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class MainPage {
     private SelenideElement heading = $$("h2").findBy(Condition.text("Путешествие дня"));
-    private SelenideElement buy = $(byText("Купить"));
-    private SelenideElement buyInCredit = $(byText("Купить в кредит"));
-    private SelenideElement paymentOptionCard = $$("h3").findBy(Condition.text("Оплата по карте"));
-    private SelenideElement paymentOptionCredit = $$("h3").findBy(Condition.text("Кредит по данным карты"));
+    private static SelenideElement buy = $(byText("Купить"));
+    private static SelenideElement buyInCredit = $(byText("Купить в кредит"));
+
 
     public MainPage(){
         heading.shouldBe(Condition.visible);
     }
 
-    public PaymentProcessPage buy() {
+    public static DebitCardPage buy() {
         buy.click();
-        return new PaymentProcessPage();
+        return new DebitCardPage();
     }
 
-    public PaymentProcessPage buyInCredit() {
+    public static CreditPage buyInCredit() {
         buyInCredit.click();
-        return new PaymentProcessPage();
+        return new CreditPage();
     }
 }

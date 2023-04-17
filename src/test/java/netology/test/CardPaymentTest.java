@@ -4,9 +4,8 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import netology.data.CardInfo;
 import netology.data.DataBaseHelper;
+import netology.page.DebitCardPage;
 import netology.page.MainPage;
-import netology.page.PaymentProcessPage;
-import netology.page.ReplyPage;
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -26,20 +25,27 @@ public class CardPaymentTest {
 
     @BeforeEach
     void setUp() {
+        open("http://localhost:8080");
         DataBaseHelper.cleanDataBase();
     }
 
     @Test
     public void shouldBuyByCardApproved() {
-        open("http://localhost:8080");
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
-        var mainPage = new MainPage();
-        mainPage.buy();
-        var paymentProcess = new PaymentProcessPage();
-        paymentProcess.PaymentData(card);
-        var replyPage = new ReplyPage();
-        replyPage.successNotification();
-        var paymentStatus = DataBaseHelper.getPaymentEntity();
-        Assertions.assertEquals("APPROVED", paymentStatus);
+        var paymentMethod = MainPage.buy();
+        var paymentData = DebitCardPage.paymentData(card);
+        var paymentSuccess = DebitCardPage.successNotification();
+        var paymentDBStatus = DataBaseHelper.getCardPaymentEntity();
+        Assertions.assertEquals("APPROVED", paymentDBStatus);
+    }
+
+    @Test
+    public void shouldBuyByCardDeclined() {
+        CardInfo card = new CardInfo(getDeclinedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buy();
+        var paymentData = DebitCardPage.paymentData(card);
+        var paymentSuccess = DebitCardPage.successNotification();
+        var paymentDBStatus = DataBaseHelper.getCardPaymentEntity();
+        Assertions.assertEquals("DECLINED", paymentDBStatus);
     }
 }
