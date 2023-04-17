@@ -36,6 +36,6 @@
 
 ### Документация
 
-* [План автоматизации тестирования](https://github.com/M-Alex96/QA-Graduate-Work/blob/main/plan.md)
+* [План автоматизации тестирования](https://github.com/M-Alex96/QA-Graduate-Work/blob/main/docs/plan.md)
 * Отчётные документы по итогам тестирования
 * Отчётные документы по итогам автоматизации
