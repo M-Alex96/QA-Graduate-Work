@@ -18,7 +18,7 @@
 
 * [Git](https://git-scm.com/downloads) - система контроля версий, понадобится для клонирования репозитория данного проекта.
 * [Intellij IDEA](https://www.jetbrains.com/ru-ru/idea/) - Среда разработки, понадобится для открытия проекта и запуска автотестов.
-* [Docker](https://www.docker.com/****) - необходим для запуска базы данных, ознакомиться с инструкцией по установке можно пройдя по [ссылке](https://github.com/netology-code/aqa-homeworks/blob/master/docker/installation.md).
+* [Docker](https://www.docker.com/) - необходим для запуска базы данных, ознакомиться с инструкцией по установке можно пройдя по [ссылке](https://github.com/netology-code/aqa-homeworks/blob/master/docker/installation.md).
 * [Google Chrome](https://www.google.com/intl/ru_ru/chrome/) - удобный и популярный браузер, понадобится для перехода по url адресу при тестировании веб-приложения.
 
 ### Запуск
