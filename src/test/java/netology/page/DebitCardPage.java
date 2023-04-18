@@ -20,35 +20,40 @@ public class DebitCardPage {
     private static SelenideElement cvc = $("[placeholder='999']");
     private static SelenideElement continueButton = $$(".button").findBy(Condition.text("Продолжить"));
     private static SelenideElement successNotification = $(".notification_status_ok");
-    private SelenideElement errorNotification = $(".notification_status_error");
-    private SelenideElement wrongFormat = $(byText("Неверный формат"));
-    private SelenideElement invalidExpirationDate = $(byText("Неверно указан срок действия карты"));
-    private SelenideElement expired = $(byText("Истёк срок действия карты"));
-    private SelenideElement empty = $(byText("Поле обязательно для заполнения"));
+    private static SelenideElement errorNotification = $(".notification_status_error");
+    private static SelenideElement wrongFormat = $(byText("Неверный формат"));
+    private static SelenideElement invalidExpirationDate = $(byText("Неверно указан срок действия карты"));
+    private static SelenideElement expired = $(byText("Истёк срок действия карты"));
+    private static SelenideElement empty = $(byText("Поле обязательно для заполнения"));
 
     public static DebitCardPage successNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
         return new DebitCardPage();
     }
 
-    public void errorNotification() {
+    public static DebitCardPage errorNotification() {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
+        return new DebitCardPage();
     }
 
-    public void wrongFormat() {
+    public static DebitCardPage wrongFormat() {
         wrongFormat.shouldBe(Condition.visible);
+        return new DebitCardPage();
     }
 
-    public void invalidExpirationDate() {
+    public static DebitCardPage invalidExpirationDate() {
         invalidExpirationDate.shouldBe(Condition.visible);
+        return new DebitCardPage();
     }
 
-    public void cardExpired() {
+    public static DebitCardPage cardExpired() {
         expired.shouldBe(Condition.visible);
+        return new DebitCardPage();
     }
 
-    public void empty() {
+    public static DebitCardPage empty() {
         empty.shouldBe(Condition.visible);
+        return new DebitCardPage();
     }
 
     public static DebitCardPage paymentData(CardInfo info) {

@@ -29,6 +29,7 @@ public class CreditPaymentTest {
         DataBaseHelper.cleanDataBase();
     }
 
+    //positive ValidCardNumber
     @Test
     public void shouldBuyByCreditApproved() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -39,12 +40,227 @@ public class CreditPaymentTest {
         Assertions.assertEquals("APPROVED", paymentDBStatus);
     }
     @Test
-    public void shouldBuyByCreditDeclined() {
+    public void shouldGetErrorBuyingByCreditDeclined() {
         CardInfo card = new CardInfo(getDeclinedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
         var paymentData = CreditPage.paymentData(card);
-        var paymentSuccess = CreditPage.successNotification();
+        var paymentSuccess = CreditPage.errorNotification();
         var paymentDBStatus = DataBaseHelper.getCreditEntity();
         Assertions.assertEquals("DECLINED", paymentDBStatus);
+    }
+
+    //negative tests
+
+    //CardNumber
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidCardNumber() {
+        CardInfo card = new CardInfo(getInvalidCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.errorNotification();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditEmptyCardNumber() {
+        CardInfo card = new CardInfo(getEmptyCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.empty();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditIncompleteCardNumber() {
+        CardInfo card = new CardInfo(getIncompleteCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    //Month
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidMonthValue00() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getInvalidMonthV1(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.invalidExpirationDate();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidMonthValue1() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getInvalidMonthV2(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidMonthValue13() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getInvalidMonthV3(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.invalidExpirationDate();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditPreviousMonth() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getPreviousMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.cardExpired();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditEmptyMonth() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getEmptyMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.empty();
+    }
+
+    //Year
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidYearValue00() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getInvalidYearV1(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.invalidExpirationDate();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidYearValue9() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getInvalidYearV2(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditPreviousYear() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getPreviousYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.cardExpired();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditYearOverTheLimit() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getYearOverTheLimit(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.invalidExpirationDate();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditEmptyYear() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getEmptyYear(), getValidOwner(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.empty();
+    }
+
+    //owner
+    @Test
+    public void shouldGetErrorBuyingByCreditCyrillicOwnerName() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerCyrillic(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOnlyNameLatin() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getNameOnlyLatin(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOnlySurnameLatin() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getSurnameOnlyLatin(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditNameWithPatronymicLatin() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithPatronymic(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOwnerNameNumbers() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithNumbers(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOwnerNameSymbols() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithSymbols(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOwnerNameLowerCaseLatin() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithLowerCase(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOwnerNameOverTheLimit() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerNameOverTheLimit(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOwnerNameOnlyOneLatinLetter() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithOnly1LatinLetter(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditOwnerNameEmpty() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerEmpty(), getValidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.empty();
+    }
+
+    //CVC
+    @Test
+    public void shouldGetErrorBuyingByCreditInvalidCVCNumber() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getInvalidCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditIncompleteCVCNumber() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getIncompleteCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.wrongFormat();
+    }
+
+    @Test
+    public void shouldGetErrorBuyingByCreditEmptyCVCNumber() {
+        CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getEmptyCVC());
+        var paymentMethod = MainPage.buyInCredit();
+        var paymentData = CreditPage.paymentData(card);
+        var paymentSuccess = CreditPage.empty();
     }
 }

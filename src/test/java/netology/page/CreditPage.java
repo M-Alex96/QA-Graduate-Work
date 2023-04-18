@@ -20,35 +20,40 @@ public class CreditPage {
     private static SelenideElement cvc = $("[placeholder='999']");
     private static SelenideElement continueButton = $$(".button").findBy(Condition.text("Продолжить"));
     private static SelenideElement successNotification = $(".notification_status_ok");
-    private SelenideElement errorNotification = $(".notification_status_error");
-    private SelenideElement wrongFormat = $(byText("Неверный формат"));
-    private SelenideElement invalidExpirationDate = $(byText("Неверно указан срок действия карты"));
-    private SelenideElement expired = $(byText("Истёк срок действия карты"));
-    private SelenideElement empty = $(byText("Поле обязательно для заполнения"));
+    private static SelenideElement errorNotification = $(".notification_status_error");
+    private static SelenideElement wrongFormat = $(byText("Неверный формат"));
+    private static SelenideElement invalidExpirationDate = $(byText("Неверно указан срок действия карты"));
+    private static SelenideElement expired = $(byText("Истёк срок действия карты"));
+    private static SelenideElement empty = $(byText("Поле обязательно для заполнения"));
 
     public static CreditPage successNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
         return new CreditPage();
     }
 
-    public void errorNotification() {
+    public static CreditPage errorNotification() {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
+        return new CreditPage();
     }
 
-    public void wrongFormat() {
+    public static CreditPage wrongFormat() {
         wrongFormat.shouldBe(Condition.visible);
+        return new CreditPage();
     }
 
-    public void invalidExpirationDate() {
+    public static CreditPage invalidExpirationDate() {
         invalidExpirationDate.shouldBe(Condition.visible);
+        return new CreditPage();
     }
 
-    public void cardExpired() {
+    public static CreditPage cardExpired() {
         expired.shouldBe(Condition.visible);
+        return new CreditPage();
     }
 
-    public void empty() {
+    public static CreditPage empty() {
         empty.shouldBe(Condition.visible);
+        return new CreditPage();
     }
 
     public static CreditPage paymentData(CardInfo info) {

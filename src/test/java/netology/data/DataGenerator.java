@@ -135,7 +135,7 @@ public class DataGenerator {
         return faker.numerify("###");
     }
 
-    public static String getInValidCVC() {
+    public static String getInvalidCVC() {
         return "000";
     }
 
