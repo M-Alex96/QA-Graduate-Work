@@ -29,7 +29,7 @@ public class CardPaymentTest {
         DataBaseHelper.cleanDataBase();
     }
 
-    //positive ValidCardNumber
+    //POSITIVE VALID CARD NUMBER
     @Test
     public void shouldBuyByCardApproved() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -41,6 +41,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardDeclined() {
         CardInfo card = new CardInfo(getDeclinedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -50,9 +51,9 @@ public class CardPaymentTest {
         Assertions.assertEquals("DECLINED", paymentDBStatus);
     }
 
-    //negative tests
+    //NEGATIVE TESTS
 
-    //CardNumber
+    //CARD NUMBER
     @Test
     public void shouldGetErrorBuyingByCardInvalidCardNumber() {
         CardInfo card = new CardInfo(getInvalidCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -66,7 +67,7 @@ public class CardPaymentTest {
         CardInfo card = new CardInfo(getEmptyCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buy();
         var paymentData = DebitCardPage.paymentData(card);
-        var paymentSuccess = DebitCardPage.empty();
+        var paymentSuccess = DebitCardPage.wrongFormat();
     }
 
     @Test
@@ -77,7 +78,7 @@ public class CardPaymentTest {
         var paymentSuccess = DebitCardPage.wrongFormat();
     }
 
-    //Month
+    //MONTH
     @Test
     public void shouldGetErrorBuyingByCardInvalidMonthValue00() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getInvalidMonthV1(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -107,7 +108,7 @@ public class CardPaymentTest {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getPreviousMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buy();
         var paymentData = DebitCardPage.paymentData(card);
-        var paymentSuccess = DebitCardPage.cardExpired();
+        var paymentSuccess = DebitCardPage.invalidExpirationDate();
     }
 
     @Test
@@ -115,16 +116,16 @@ public class CardPaymentTest {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getEmptyMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buy();
         var paymentData = DebitCardPage.paymentData(card);
-        var paymentSuccess = DebitCardPage.empty();
+        var paymentSuccess = DebitCardPage.wrongFormat();
     }
 
-    //Year
+    //YEAR
     @Test
     public void shouldGetErrorBuyingByCardInvalidYearValue00() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getInvalidYearV1(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buy();
         var paymentData = DebitCardPage.paymentData(card);
-        var paymentSuccess = DebitCardPage.invalidExpirationDate();
+        var paymentSuccess = DebitCardPage.cardExpired();
     }
 
     @Test
@@ -156,11 +157,12 @@ public class CardPaymentTest {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getEmptyYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buy();
         var paymentData = DebitCardPage.paymentData(card);
-        var paymentSuccess = DebitCardPage.empty();
+        var paymentSuccess = DebitCardPage.wrongFormat();
     }
 
-    //owner
+    //OWNER
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardCyrillicOwnerName() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerCyrillic(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -169,6 +171,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOnlyNameLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getNameOnlyLatin(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -177,6 +180,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOnlySurnameLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getSurnameOnlyLatin(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -185,6 +189,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardNameWithPatronymicLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithPatronymic(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -193,6 +198,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOwnerNameNumbers() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithNumbers(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -201,6 +207,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOwnerNameSymbols() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithSymbols(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -209,6 +216,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOwnerNameLowerCaseLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithLowerCase(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -217,6 +225,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOwnerNameOverTheLimit() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerNameOverTheLimit(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -225,6 +234,7 @@ public class CardPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardOwnerNameOnlyOneLatinLetter() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithOnly1LatinLetter(), getValidCVC());
         var paymentMethod = MainPage.buy();
@@ -242,6 +252,7 @@ public class CardPaymentTest {
 
     //CVC
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCardInvalidCVCNumber() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getInvalidCVC());
         var paymentMethod = MainPage.buy();

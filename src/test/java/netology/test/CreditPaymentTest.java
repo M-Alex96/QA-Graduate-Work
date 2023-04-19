@@ -29,7 +29,7 @@ public class CreditPaymentTest {
         DataBaseHelper.cleanDataBase();
     }
 
-    //positive ValidCardNumber
+    //POSITIVE VALID CARD NUMBER
     @Test
     public void shouldBuyByCreditApproved() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -40,6 +40,7 @@ public class CreditPaymentTest {
         Assertions.assertEquals("APPROVED", paymentDBStatus);
     }
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditDeclined() {
         CardInfo card = new CardInfo(getDeclinedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -49,9 +50,9 @@ public class CreditPaymentTest {
         Assertions.assertEquals("DECLINED", paymentDBStatus);
     }
 
-    //negative tests
+    //NEGATIVE TESTS
 
-    //CardNumber
+    //CARD NUMBER
     @Test
     public void shouldGetErrorBuyingByCreditInvalidCardNumber() {
         CardInfo card = new CardInfo(getInvalidCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -65,7 +66,7 @@ public class CreditPaymentTest {
         CardInfo card = new CardInfo(getEmptyCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
         var paymentData = CreditPage.paymentData(card);
-        var paymentSuccess = CreditPage.empty();
+        var paymentSuccess = CreditPage.wrongFormat();
     }
 
     @Test
@@ -76,7 +77,7 @@ public class CreditPaymentTest {
         var paymentSuccess = CreditPage.wrongFormat();
     }
 
-    //Month
+    //MONTH
     @Test
     public void shouldGetErrorBuyingByCreditInvalidMonthValue00() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getInvalidMonthV1(), getCurrentYear(), getValidOwner(), getValidCVC());
@@ -106,7 +107,7 @@ public class CreditPaymentTest {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getPreviousMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
         var paymentData = CreditPage.paymentData(card);
-        var paymentSuccess = CreditPage.cardExpired();
+        var paymentSuccess = CreditPage.invalidExpirationDate();
     }
 
     @Test
@@ -114,16 +115,16 @@ public class CreditPaymentTest {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getEmptyMonth(), getCurrentYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
         var paymentData = CreditPage.paymentData(card);
-        var paymentSuccess = CreditPage.empty();
+        var paymentSuccess = CreditPage.wrongFormat();
     }
 
-    //Year
+    //YEAR
     @Test
     public void shouldGetErrorBuyingByCreditInvalidYearValue00() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getInvalidYearV1(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
         var paymentData = CreditPage.paymentData(card);
-        var paymentSuccess = CreditPage.invalidExpirationDate();
+        var paymentSuccess = CreditPage.cardExpired();
     }
 
     @Test
@@ -155,11 +156,12 @@ public class CreditPaymentTest {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getEmptyYear(), getValidOwner(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
         var paymentData = CreditPage.paymentData(card);
-        var paymentSuccess = CreditPage.empty();
+        var paymentSuccess = CreditPage.wrongFormat();
     }
 
-    //owner
+    //OWNER
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditCyrillicOwnerName() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerCyrillic(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -168,6 +170,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOnlyNameLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getNameOnlyLatin(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -176,6 +179,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOnlySurnameLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getSurnameOnlyLatin(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -184,6 +188,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditNameWithPatronymicLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithPatronymic(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -192,6 +197,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOwnerNameNumbers() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithNumbers(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -200,6 +206,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOwnerNameSymbols() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithSymbols(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -208,6 +215,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOwnerNameLowerCaseLatin() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithLowerCase(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -216,6 +224,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOwnerNameOverTheLimit() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerNameOverTheLimit(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -224,6 +233,7 @@ public class CreditPaymentTest {
     }
 
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditOwnerNameOnlyOneLatinLetter() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getOwnerWithOnly1LatinLetter(), getValidCVC());
         var paymentMethod = MainPage.buyInCredit();
@@ -241,6 +251,7 @@ public class CreditPaymentTest {
 
     //CVC
     @Test
+    //BUG
     public void shouldGetErrorBuyingByCreditInvalidCVCNumber() {
         CardInfo card = new CardInfo(getApprovedCardNumber(), getCurrentMonth(), getCurrentYear(), getValidOwner(), getInvalidCVC());
         var paymentMethod = MainPage.buyInCredit();
