@@ -11,8 +11,8 @@
 Общее количество тест-кейсов - 56, из них успешными оказались 60%. 34 от общего количества прошли проверки, 22 проверки не прошли.
 
 #### *Отчёты Gradle и Allure предоставлены на скриншотах:*
-![image](https://user-images.githubusercontent.com/116108891/233691813-f0e594ea-2782-4750-a4d1-cd66343cd809.png)
-![image](https://user-images.githubusercontent.com/116108891/233691987-2a48f1a5-4c1b-4743-abd1-c86d19b562c0.png)
+![image](https://user-images.githubusercontent.com/116108891/233966723-f0953414-5427-4e99-867d-680d44115716.png)
+![image](https://user-images.githubusercontent.com/116108891/233966811-a7247b78-349c-4c81-8016-3f56a769d8aa.png)
 
 ### Общие рекомендации:
 
